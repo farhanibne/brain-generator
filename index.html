@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"//www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Brain F*ck Code Generator</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <link rel="shortcut icon" href="abc.png" type="image/x-icon">
+    <link href="/dist/output.css" rel="stylesheet">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+  
+	<script type="text/javascript" charset="utf-8">
+	var d = document;
+	var bf = {
+		code: {
+			// set up an array of values from 8 to 128, by 8s
+			base: '++++++++[>+>++>+++>++++>+++++>++++++>+++++++>++++++++>+++++++++>++++++++++>+++++++++++>++++++++++++>+++++++++++++>++++++++++++++>+++++++++++++++>++++++++++++++++<<<<<<<<<<<<<<<<-]',
+			slot: {
+				increment: '>',
+				decrement: '<'
+			},
+			pointer: {
+				increment: '+',
+				decrement: '-'
+			},
+			output: '.'
+		},
+		fuckit: function () {
+			make_code = function (c) {
+				// make the bf code for this character
+				var char_code = '';
+				// set the slot
+				var slot = Math.round(c / 8);
+				for (var i = 0; i < slot; i++) {
+					char_code += bf.code.slot.increment;
+				}
+				// set the pointer
+				if (c > (slot * 8)) {
+					var pointer_diff = c - (slot * 8);
+					var pointer = bf.code.pointer.increment;
+					var pointer_reversed = bf.code.pointer.decrement;
+				} else if (c < (slot * 8)) {
+					var pointer_diff = (slot * 8) - c;
+					var pointer = bf.code.pointer.decrement;
+					var pointer_reversed = bf.code.pointer.increment;
+				} else {
+					var pointer_diff = 0;
+				}
+				for (var i = 0; i < pointer_diff; i++) {
+					char_code += pointer;
+				}
+				// output the character
+				char_code += bf.code.output;
+				// reset the pointer
+				for (var i = 0; i < pointer_diff; i++) {
+					char_code += pointer_reversed;
+				}
+				// reset the slot
+				for (var i = 0; i < slot; i++) {
+					char_code += bf.code.slot.decrement;
+				}
+				// return our bf code
+				return char_code;
+			}
+			var code = bf.code.base;
+			var txt2fck = d.getElementById('txt2fck').value;
+			for (var i = 0; i < txt2fck.length; i++) {
+				code += make_code(txt2fck.charCodeAt(i));
+			}
+			code += bf.code.output;
+			d.getElementById('brainf_ckcode').value = code;
+		}
+	};
+	</script>
+</head>
+<body>
+
+  <div style=" width: 100vw; overflow: hidden;" >
+
+    
+    <center>
+      <b>
+        <h1 class="text-4xl mt-6 mb-4 " > Brain F*uck Code Generator</h1>
+      </b>
+    
+
+      <div class=" w-[100vw]">
+        <p>
+          <label class="text-xl mb-6" for="txt2fck">Text to Make brain</label>
+        <br />
+          <input class="bg-transparent border-4 mt-5 p-1 "  id="txt2fck" rows="6" cols="60" placeholder="enter your text here"/><br />
+        </p>
+        <p>
+          <button  onclick="bf.fuckit();" >Generate Code</button>
+
+        </p>
+        <p>
+          <!-- <label for="brainf_ckcode">Brainf_ck code</label><br> -->
+          <textarea class="bg-transparent border-4 mt-5 p-1 "  id="brainf_ckcode" rows="6" cols="60"></textarea><br>
+          <br>
+          <br>
+          <button id="btn" onclick="text();" >Copy Code</button>
+        </p>
+      </div>
+
+    </center>
+
+
+  </div>
+
+<script>
+    function text(){
+      const text = document.querySelector('#brainf_ckcode');
+      const btn = document.querySelector('#btn');
+      text.select();
+      document.execCommand('copy');
+      btn.textContent = 'Copied!';
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+      }, 2000);
+    }
+</script>
+
+
+
+</body>
+</html>

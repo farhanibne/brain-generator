@@ -1,0 +1,43 @@
+body{
+     width: 100vw;
+     overflow: hidden;
+    }
+input{
+    border-radius: 10px;
+    width: 80vw; 
+} 
+textarea{
+    border-radius: 10px;
+    width: 80vw; 
+}
+button{
+    background-color: black;
+    color: aliceblue;
+    margin: 13px;
+    padding: 6px;
+    border-radius: 10px;
+    width: 20vw;
+}   
+h1{
+    font-size: 50px;
+}
+
+@media screen and (max-width: 768px) {
+
+    h1{
+        font-size: 50px;
+    }
+}
+@media screen and (min-width: 1024px) {
+    input{
+        width: 50vw;
+    }
+    
+    button{
+        width: 15vw;
+    }
+
+    textarea{
+        width: 50vw;
+    }
+  }
